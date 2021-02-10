@@ -27,6 +27,14 @@ self.addEventListener('install', (e) =>  {
     );
 });
 
+self.addEventListener('fetch', function(event) {
+    event.respondWith(
+      fetch(event.request).catch(function() {
+        return caches.match(event.request);
+      })
+    );
+  });
+
 self.addEventListener('fetch', function (e) {
     e.respondWith(
         caches.match(e.request).then(function (r){
